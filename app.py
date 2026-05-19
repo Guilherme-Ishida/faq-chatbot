@@ -1,4 +1,5 @@
 from flask import Flask, render_template, jsonify, request
+from langchain.schema import Document
 from src.helper import download_embedding
 from langchain_pinecone import PineconeVectorStore
 from langchain_groq import ChatGroq
@@ -22,6 +23,7 @@ os.environ["GROQ_API_KEY"] = GROQ_API_KEY
 embedding = download_embedding()
 
 index_name = "medical-chatbot"
+
 
 docsearch = PineconeVectorStore.from_existing_index(
     index_name=index_name,
