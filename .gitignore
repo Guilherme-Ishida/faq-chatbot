@@ -77,6 +77,7 @@ target/
 
 # Jupyter Notebook
 .ipynb_checkpoints
+research/trials.ipynb
 
 # IPython
 profile_default/
@@ -133,6 +134,10 @@ celerybeat.pid
 
 # SageMath parsed files
 *.sage.py
+
+# Vector database and source data
+chroma_db/
+data/*.pdf
 
 # Environments
 .env

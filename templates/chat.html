@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot da Kira</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Assistente Virtual UTFPR</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}"/>
 </head>
 <body>
@@ -17,20 +17,32 @@
             <div class="chat-header">
                 <div class="header-info">
                     <div class="avatar-container">
-                        <img src="{{ url_for('static', filename='eu_distorcida.jpeg') }}" class="header-avatar" alt="Kira">
+                        <div class="header-avatar">
+                            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="24" cy="24" r="24" fill="#F5A800"/>
+                                <path d="M24 11C20.7 11 18 13.7 18 17C18 20.3 20.7 23 24 23C27.3 23 30 20.3 30 17C30 13.7 27.3 11 24 11Z" fill="white"/>
+                                <path d="M36 37C36 30.4 30.6 25 24 25C17.4 25 12 30.4 12 37H36Z" fill="white"/>
+                            </svg>
+                        </div>
                         <span class="status-dot"></span>
                     </div>
                     <div class="header-text">
-                        <h3>Chatbot da Kira ✨</h3>
-                        <p>Me pergunte qualquer coisa (porém depende)!</p>
+                        <h3>Assistente Virtual UTFPR</h3>
+                        <p>Online &mdash; pronto para te ajudar</p>
                     </div>
                 </div>
             </div>
 
             <div id="messageArea" class="chat-messages">
                 <div class="welcome-message">
-                    <img src="{{ url_for('static', filename='gato_serio.webp') }}" class="welcome-cat" alt="Gato">
-                    <p>Olá! Sou o assistente gatonildo da Kira. Como posso te ajudar hoje? 🐱</p>
+                    <div class="welcome-icon">
+                        <svg viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="36" cy="36" r="36" fill="#EBF0FA"/>
+                            <path d="M36 16C31.6 16 28 19.6 28 24C28 28.4 31.6 32 36 32C40.4 32 44 28.4 44 24C44 19.6 40.4 16 36 16Z" fill="#003087"/>
+                            <path d="M52 52C52 43.2 44.8 36 36 36C27.2 36 20 43.2 20 52H52Z" fill="#003087"/>
+                        </svg>
+                    </div>
+                    <p>Olá! Sou o Assistente Virtual da <strong>UTFPR</strong>.<br>Como posso te ajudar hoje?</p>
                 </div>
             </div>
 
@@ -46,70 +58,7 @@
         </div>
     </div>
 
-    <script>
-        const botImgUrl = "{{ url_for('static', filename='gato_serio.webp') }}";
-        const userImgUrl = "{{ url_for('static', filename='eu_distorcida.jpeg') }}";
-
-        $(document).ready(function() {
-            $("#messageForm").on("submit", function(event) {
-                event.preventDefault();
-
-                const date = new Date();
-                const str_time = date.getHours() + ":" + String(date.getMinutes()).padStart(2, '0');
-                const rawText = $("#text").val().trim();
-
-                if (!rawText) return;
-
-                const userHtml = `
-                    <div class="message user-message">
-                        <div class="message-content">
-                            <div class="bubble">${rawText}</div>
-                            <span class="time">${str_time}</span>
-                        </div>
-                        <img src="${userImgUrl}" class="msg-avatar" alt="Você">
-                    </div>`;
-
-                $("#text").val("");
-                $("#messageArea").append(userHtml);
-                scrollToBottom();
-
-                const typingHtml = `
-                    <div class="message bot-message" id="typing">
-                        <img src="${botImgUrl}" class="msg-avatar" alt="Bot">
-                        <div class="message-content">
-                            <div class="bubble typing-bubble">
-                                <span></span><span></span><span></span>
-                            </div>
-                        </div>
-                    </div>`;
-                $("#messageArea").append(typingHtml);
-                scrollToBottom();
-
-                $.ajax({
-                    data: { msg: rawText },
-                    type: "POST",
-                    url: "/get",
-                }).done(function(data) {
-                    $("#typing").remove();
-                    const botHtml = `
-                        <div class="message bot-message">
-                            <img src="${botImgUrl}" class="msg-avatar" alt="Bot">
-                            <div class="message-content">
-                                <div class="bubble">${data}</div>
-                                <span class="time">${str_time}</span>
-                            </div>
-                        </div>`;
-                    $("#messageArea").append(botHtml);
-                    scrollToBottom();
-                });
-            });
-
-            function scrollToBottom() {
-                const area = document.getElementById("messageArea");
-                area.scrollTop = area.scrollHeight;
-            }
-        });
-    </script>
+    <script src="{{ url_for('static', filename='chat.js') }}"></script>
 
 </body>
 </html>
