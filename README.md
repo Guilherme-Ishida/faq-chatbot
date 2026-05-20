@@ -1,138 +1,43 @@
-# A-Complete-Medical-Chatbot-with-LLMs-LangChain-Pinecone-Flask-AWS
+# Assistente Virtual UTFPR
 
-## Project Overview
+Chatbot institucional baseado em FAQ para atendimento aos servidores da UTFPR.
 
-This project is an end-to-end Medical Chatbot built using Large Language Models, designed to answer health-related questions in a conversational way. The system leverages a Retrieval-Augmented Generation approach, combining semantic search with generative AI to provide accurate and context-aware responses.
+---
 
-The chatbot integrates multiple technologies: LangChain is used to orchestrate the LLM pipeline, Pinecone serves as a vector database for  similarity search over medical knowledge, and Flask provides a web interface for user interaction. The application is designed to be scalable and production-ready, with support for deployment on AWS using containerization and CI/CD workflows.
+## Como rodar localmente
 
-Users can ask medical questions in natural language, and the chatbot retrieves relevant information from a knowledge base before generating responses, improving reliability compared to purely generative models. This project demonstrates how to build a full-stack AI application, combining machine learning, backend development, and cloud deployment in a healthcare-focused use case.
+**1. Criar e ativar o ambiente virtual**
 
-# How to run?
-### STEPS:
-
-Clone the repository
+> Requer [Anaconda](https://www.anaconda.com/download) ou Miniconda instalado.
 
 ```bash
-git clone https://github.com/KiriaNakahati/A-Complete-Medical-Chatbot-with-LLMs-LangChain-Pinecone-Flask-AWS.git
-```
-### STEP 01- Create a conda environment after opening the repository
-
-```bash
-conda create -n medibot python=3.10 -y
+conda create -n faq-chatbot python=3.11 -y
+conda activate faq-chatbot
 ```
 
-```bash
-conda activate medibot
-```
-
-
-### STEP 02- install the requirements
+**2. Instalar as dependências**
 ```bash
 pip install -r requirements.txt
 ```
 
-
-### Create a `.env` file in the root directory and add your Pinecone & groq credentials as follows:
-
-```ini
-PINECONE_API_KEY = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-GROQ_API_KEY = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+**3. Configurar o `.env`**
+```
+GROQ_API_KEY=sua_chave_aqui
+PATH_DATA=data/
 ```
 
-
+**4. Indexar o FAQ** (rode uma vez, e sempre que atualizar o PDF)
 ```bash
-# run the following command to store embeddings to pinecone
 python store_index.py
 ```
 
+**5. Subir o servidor**
 ```bash
-# Finally run the following command
 python app.py
 ```
 
-Now,
-```bash
-open up localhost:
-```
+Acesse em: `http://localhost:8080`
 
+---
 
-### Techstack Used:
-
-- Python
-- LangChain
-- Flask
-- Groq
-- Pinecone
-
-
-
-# AWS-CICD-Deployment-with-Github-Actions
-
-## 1. Login to AWS console.
-
-## 2. Create IAM user for deployment
-
-	#with specific access
-
-	1. EC2 access : It is virtual machine
-
-	2. ECR: Elastic Container registry to save your docker image in aws
-
-
-	#Description: About the deployment
-
-	1. Build docker image of the source code
-
-	2. Push your docker image to ECR
-
-	3. Launch Your EC2 
-
-	4. Pull Your image from ECR in EC2
-
-	5. Lauch your docker image in EC2
-
-	#Policy:
-
-	1. AmazonEC2ContainerRegistryFullAccess
-
-	2. AmazonEC2FullAccess
-
-	
-## 3. Create ECR repo to store/save docker image
-    - Save the URI: 315865595366.dkr.ecr.us-east-1.amazonaws.com/medicalbot
-
-	
-## 4. Create EC2 machine (Ubuntu) 
-
-## 5. Open EC2 and Install docker in EC2 Machine:
-	
-	
-	#optinal
-
-	sudo apt-get update -y
-
-	sudo apt-get upgrade
-	
-	#required
-
-	curl -fsSL https://get.docker.com -o get-docker.sh
-
-	sudo sh get-docker.sh
-
-	sudo usermod -aG docker ubuntu
-
-	newgrp docker
-	
-# 6. Configure EC2 as self-hosted runner:
-    setting>actions>runner>new self hosted runner> choose os> then run command one by one
-
-
-# 7. Setup github secrets:
-
-   - AWS_ACCESS_KEY_ID
-   - AWS_SECRET_ACCESS_KEY
-   - AWS_DEFAULT_REGION
-   - ECR_REPO
-   - PINECONE_API_KEY
-   - GROQ_API_KEY
+Para instruções de deploy em servidor, consulte o arquivo [DEPLOY.md](DEPLOY.md).

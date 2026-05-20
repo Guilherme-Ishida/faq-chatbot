@@ -1,9 +1,15 @@
 langchain==0.3.26
+langchain-core>=0.3.75,<1.0.0
+langchain-community==0.3.26
+langchain-groq==0.3.8
+langchain-huggingface
+langchain-chroma
 flask==3.1.1
+flask-limiter
+flask-talisman
 sentence-transformers==4.1.0
 pypdf==5.6.1
+pypdfium2
 python-dotenv==1.1.0
-langchain-pinecone==0.2.8
-langchain-openai==0.3.24
-langchain-community==0.3.26
--e .
+chromadb
+ipykernel
