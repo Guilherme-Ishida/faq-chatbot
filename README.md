@@ -22,11 +22,11 @@ pip install -r requirements.txt
 
 **3. Configurar o `.env`**
 ```
-GROQ_API_KEY=sua_chave_aqui
-PATH_DATA=data/
+GROQ_API_KEY=sua_chave_aqui -> se cadastra no groq e cria uma api key pra você
+PATH_DATA=data/ -> aqui voce coloca o seu caminho até a pasta data ex: C:/Users/seu_usuário/.../data/
 ```
 
-**4. Indexar o FAQ** (rode uma vez, e sempre que atualizar o PDF)
+**4. Indexar o FAQ na pasta "data"** (rode uma vez, e sempre que atualizar o PDF)
 ```bash
 python store_index.py
 ```
