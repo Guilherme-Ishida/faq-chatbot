@@ -16,6 +16,7 @@ def load_pdf_files(data):
 
 def extract_qa_pairs(docs: list) -> List[Document]:
     full_text = "\n".join([doc.page_content for doc in docs])
+    source = docs[0].metadata.get("source", "FAQ") if docs else "FAQ"
 
     pattern = r"PERGUNTA\s+\d+:\s*(.*?)\s*RESPOSTA\s+\d+:\s*(.*?)(?=PERGUNTA\s+\d+:|$)"
     matches = re.findall(pattern, full_text, re.DOTALL)
@@ -26,7 +27,7 @@ def extract_qa_pairs(docs: list) -> List[Document]:
         qa_docs.append(
             Document(
                 page_content=content,
-                metadata={"source": "FAQ", "numero": i}
+                metadata={"source": source, "numero": i}
             )
         )
 
