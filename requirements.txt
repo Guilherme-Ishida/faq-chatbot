@@ -7,6 +7,7 @@ langchain-chroma
 flask==3.1.1
 flask-limiter
 flask-talisman
+werkzeug
 sentence-transformers==4.1.0
 pypdf==5.6.1
 pypdfium2
